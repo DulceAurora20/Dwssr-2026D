@@ -16,12 +16,13 @@ import { dirname } from 'node:path'
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 //Crear el objeto Debug 
-const debug = createDebug ('dwssr-2026d:server')
+import createDebug from 'debug';
+const debug = createDebug('dwssr-2026d:app');
 
 //Importar la ruta de la aplicación
 // var indexRouter = require('./routes/index');
-import indexRouter from './bin/routes/index.js';
-import usersRouter from './bin/routes/users.js';
+import indexRouter from './routes/index.js';
+import usersRouter from './routes/users.js';
 //Creando la aplicación 
 var app = express();
 
@@ -33,8 +34,13 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+//Configurar la carpeta de archivos estaticos
+debug("🪄Creando servidor de Archivos Estáticos")
 app.use(express.static(path.join(__dirname, 'public')));
 
+//Registrando las rutas de la aplicación
+debug("🗺️ Registrando rutas")
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
