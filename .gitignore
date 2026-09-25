@@ -1,0 +1,11 @@
+# Dependencias
+node_modules/
+
+# Entornos y variables
+.env
+
+# Logs y temporales
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.DS_Store

@@ -4,7 +4,7 @@
  * Module dependencies.
  */
 
-import app from '../app'
+import app from '../app.js';
 // Importando Debug
 import createDebug from "debug"
 // var debug = require('debug')('dwssr-2026d:server');
@@ -91,6 +91,6 @@ function onListening() {
   const addr = server.address();
   const bind = typeof addr === 'string'
     ? `pipe ${addr}`
-    : `port ${addr.port};
+    : `port ${addr.port}`;
   debug('Listening on ' + bind);
 }
