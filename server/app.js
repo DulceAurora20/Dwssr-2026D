@@ -22,7 +22,7 @@ const debug = createDebug ('dwssr-2026d:server')
 // var indexRouter = require('./routes/index');
 import indexRouter from './bin/routes/index.js';
 import usersRouter from './bin/routes/users.js';
-
+//Creando la aplicación 
 var app = express();
 
 // view engine setup
