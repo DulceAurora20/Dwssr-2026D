@@ -1,12 +1,29 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+// (X) var createError = require('http-errors');
+import createError from 'http-errors'
+// var express = require('express');
+import express from 'express'
+// var path = require('path');
+import path from 'node:path'
+// var cookieParser = require('cookie-parser');
+// IMPORTA MODULOS PARA MANEJAR COOKIES
+import cookieParser from 'cookie-parser'
+//var logger = require('morgan');
+import logger from 'morgan'
+//Importar para crear Diname
+import { fileURLToPath } from 'node:url'
+import { dirname } from 'node:path'
+//Creando la variables
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
+//Crear el objeto Debug 
+import createDebug from 'debug';
+const debug = createDebug('dwssr-2026d:app');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-
+//Importar la ruta de la aplicación
+// var indexRouter = require('./routes/index');
+import indexRouter from './routes/index.js';
+import usersRouter from './routes/users.js';
+//Creando la aplicación 
 var app = express();
 
 // view engine setup
@@ -17,8 +34,13 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, '..', 'public')));
 
+//Configurar la carpeta de archivos estaticos
+debug("🪄Creando servidor de Archivos Estáticos")
+app.use(express.static(path.join(__dirname, 'public')));
+
+//Registrando las rutas de la aplicación
+debug("🗺️ Registrando rutas")
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
@@ -38,4 +60,5 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-module.exports = app;
+// module.exports = app;
+export default app;
