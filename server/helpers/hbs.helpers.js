@@ -47,8 +47,39 @@ export function viteAssetHelper() {
 
     // Si no existe el manifest
     if (!fs.existsSync(manifestPath)) {
-        console.warn(
-            'Vite manifest not found. Run "npm run build" to generate it.'
+        console.warn('Vite manifest not found. Run "npm run build" to generate it.'
         );
+        return '';
     }
+    // Leemos el contenido del manifest
+    const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
+
+    // Buscamos la entrada principal (por lo general main.js)
+    const mainEntry = manifest['main.js'];
+
+    let tags = '';
+
+    // CSS files
+    if (mainEntry && mainEntry.css) {
+        mainEntry.css.forEach(cssfile => {
+            tags += `<link rel="stylesheet" href="/${cssfile}">\n`;
+        });
+    }
+
+    // JS files
+    if (mainEntry && mainEntry.file) {
+        tags += `<script type="module" src="/${mainEntry.file}"></script>\n`;
+    }
+
+    return tags;
+} // <-- Esta llave cierra la función viteAssetHelper()
+
+/*
+* Función registradora del Helper de Handlebars
+*/
+export function registerViteHelper(hbs){
+    hbs.registerHelper('viteAssets',()=>{
+        // Sanitizando la salida del helper
+        return new hbs.SafeString(viteAssetHelper())
+    })
 }
