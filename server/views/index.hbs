@@ -1,2 +1,22 @@
-<h1>{{title}}</h1>
-<p>Welcome to {{title}}</p>
+<h1 class="text-purple-600 text-5xl font-bold tracking-wide" style="color: #7c3aed; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+  {{title}}
+</h1>
+
+<div class="mt-4" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+  <p class="text-gray-700">Welcome to {{title}}</p>
+
+  <p class="font-semibold text-gray-900 mt-2">Counter {{counter}}</p>
+
+  <!-- Botón estilizado con clases de Tailwind -->
+  <a href="/">
+    <button class="bg-teal-500 hover:bg-teal-600 text-white mt-3 px-4 py-2 rounded-md shadow transition cursor-pointer" style="background-color: #14b8a6; color: white; padding: 8px 16px; border: none; border-radius: 6px; cursor: pointer;">
+      Click me
+    </button>
+  </a>
+
+  <div class="mt-4 space-y-1 text-gray-800">
+    {{#each numbers}}
+      <p class="text-lg">Te mando un 💜</p>
+    {{/each}}
+  </div>
+</div>
