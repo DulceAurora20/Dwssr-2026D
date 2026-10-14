@@ -50,7 +50,7 @@ app.use(function(req, res, next) {
   next(createError(404));
 });
 
-// error handler (Cambiado a _next para que ESLint no marque error por no usarse)
+// error handler
 app.use(function(err, req, res, _next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
@@ -60,6 +60,15 @@ app.use(function(err, req, res, _next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+// Ejemplo de codigo inalcanzable
+// (() => {
+//     let age = 10
+//     return age
+//     if (age == 10) {
+//         console.log("Código")
+//     }
+// })()
 
 // module.exports = app;
 export default app;
