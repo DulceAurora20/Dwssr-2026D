@@ -1,0 +1,31 @@
+/* Estilos Neón - Fondo Negro y Letras Rosa Neón */
+:root {
+  --bg-color: #000000;
+  --neon-pink: #ff007f;
+  --neon-pink-glow: rgba(255, 0, 127, 0.8);
+  --text-color: #ffffff;
+}
+
+body {
+  color: var(--text-color);
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  margin: 0;
+  padding: 2rem;
+  min-height: 100vh;
+}
+
+/* Encabezados y títulos con resplandor Rosa Neón */
+h1, h2, h3, .neon-title {
+  font-family: 'Trebuchet MS', 'Arial Black', Impact, sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow: 0 0 10px var(--neon-pink-glow),
+               0 0 20px var(--neon-pink-glow),
+               0 0 30px var(--neon-pink);
+}
+
+p, span, div {
+  color: #ff99dd;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}

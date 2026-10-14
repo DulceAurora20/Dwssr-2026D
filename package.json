@@ -22,12 +22,8 @@
   },
   "devDependencies": {
     "concurrently": "^9.2.4",
-<<<<<<< HEAD
-    "nodemon": "^3.1.14"
-=======
     "nodemon": "^3.1.14",
     "vite": "^8.3.4"
->>>>>>> 5ac302f (✨)
   },
   "imports": {
     "#server/*": "./server/*",

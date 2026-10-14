@@ -1,2 +1,3 @@
 import './styles/main.css';
-console.log('VITE + EXPRESS Working!!');
+
+console.log('¡Estilos neón cargados correctamente!');

@@ -1,1 +1,23 @@
-body { margin: 0; }
+body {
+  background-color: #121212;
+  color: #ff007f;
+  font-family: 'Poppins', sans-serif;
+  padding: 2rem;
+}
+
+h1 {
+  font-family: 'Orbitron', sans-serif;
+  color: #ff2a8d;
+  font-size: 2.8rem;
+  text-shadow: 
+    0 0 5px #ff2a8d,
+    0 0 10px #ff2a8d,
+    0 0 20px #ff007f,
+    0 0 40px #ff007f;
+}
+
+p {
+  color: #ff66b2;
+  font-size: 1.1rem;
+  text-shadow: 0 0 8px rgba(255, 0, 127, 0.6);
+}
