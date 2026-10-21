@@ -1,0 +1,17 @@
+{
+  // Tamaño de La fuente del editor(px)
+  "editor.fontSize": 17,
+  
+  // Tamaño de La fuente de La terminal integrada(px)
+  "terminal.integrated.fontSize": 17,
+  
+  // Tamaño de La indentación (espacios)
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "editor.detectIndentation": false,
+
+  // Configuración solicitada para el Autofix de VSCode (ESLint)
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "always"
+  }
+}

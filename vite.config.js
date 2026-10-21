@@ -11,9 +11,28 @@ export default defineConfig({
     }
   },
   build: {
+<<<<<<< HEAD
     manifest: true, 
     rollupOptions: {
       input: './src/main.js',
     },
   },
 });
+=======
+    outDir: 'dist',
+    manifest: true,
+    rollupOptions: {
+      input: resolve(__dirname, 'src/main.js'),
+      output: {
+        entryFileNames: `javascripts/main.js`,
+        assetFileNames: (assetInfo) => {
+          if (assetInfo.name && assetInfo.name.endsWith('.css')) {
+            return 'assets/main.css';
+          }
+          return 'assets/[name].[ext]';
+        }
+      }
+    }
+  }
+});
+>>>>>>> dev

@@ -67,7 +67,11 @@ app.use(function(req, res, next) {
 });
 
 // error handler
+<<<<<<< HEAD
 app.use(function(err, req, res, next) {
+=======
+app.use(function(err, req, res, _next) {
+>>>>>>> dev
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
@@ -76,6 +80,15 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+// Ejemplo de codigo inalcanzable
+// (() => {
+//     let age = 10
+//     return age
+//     if (age == 10) {
+//         console.log("Código")
+//     }
+// })()
 
 // module.exports = app;
 export default app;

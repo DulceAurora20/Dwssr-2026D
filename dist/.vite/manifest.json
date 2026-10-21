@@ -1,11 +1,19 @@
 {
   "src/main.js": {
+<<<<<<< HEAD
     "file": "assets/main-aC3iNw1u.js",
+=======
+    "file": "javascripts/main.js",
+>>>>>>> dev
     "name": "main",
     "src": "src/main.js",
     "isEntry": true,
     "css": [
+<<<<<<< HEAD
       "assets/main-C4-eNv8a.css"
+=======
+      "assets/main.css"
+>>>>>>> dev
     ]
   }
 }
