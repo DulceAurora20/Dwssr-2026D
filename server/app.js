@@ -12,6 +12,10 @@ import logger from 'morgan'
 //Importar para crear Diname
 import { fileURLToPath } from 'node:url'
 import { dirname } from 'node:path'
+
+//Importando el template engine Handlebars
+import hbs from 'hbs'
+
 //Creando la variables
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
@@ -24,6 +28,8 @@ const debug = createDebug('dwssr-2026d:app');
 // Importar las rutas de la aplicación usando el alias
 import indexRouter from '#server/routes/index.js';
 import usersRouter from '#server/routes/users.js';
+//Importando el registrador del helper
+import { registerViteHelper } from './helpers/hbs.helpers.js';
 //Creando la aplicación 
 var app = express();
 
@@ -35,6 +41,12 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+
+//Archivos estaticos para produccion
+if (process.env.NODE_ENV == 'production'){
+    app.use(express.static(path.join(__dirname, 'dist')));
+}
 
 //Configurar la carpeta de archivos estaticos
 debug("🪄Creando servidor de Archivos Estáticos")

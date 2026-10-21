@@ -1,18 +1,21 @@
-// Importando configurador de Vite
-import { defineConfig } from 'vite'
-// Importando un admin de rutas
-import { resolve } from 'node:path'
-// Importando tailwindcss
-import tailwindcss from '@tailwindcss/vite'
-
-// Imports para crear Dirname
-import { fileURLToPath } from 'node:url'
-import { dirname } from 'node:path'
-
-// Creando la variables de rutas
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = dirname(__filename)
+import { defineConfig } from 'vite';
+import { resolve } from 'path';
 
 export default defineConfig({
-    // Directorio Raíz de los archivos fuente del front-end
-})
+  build: {
+    outDir: 'dist',
+    manifest: true,
+    rollupOptions: {
+      input: resolve(__dirname, 'src/main.js'),
+      output: {
+        entryFileNames: `javascripts/main.js`,
+        assetFileNames: (assetInfo) => {
+          if (assetInfo.name && assetInfo.name.endsWith('.css')) {
+            return 'assets/main.css';
+          }
+          return 'assets/[name].[ext]';
+        }
+      }
+    }
+  }
+});
