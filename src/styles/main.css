@@ -1,29 +1,14 @@
 body {
-<<<<<<< HEAD
-  background-color: #e0f2fe; /* Un color azul claro visible */
-  font-family: Arial, sans-serif;
-}
-=======
-  background-color: #121212;
-  color: #ff007f;
+  background-color: #000000 !important;
+  color: #ffffff;
   font-family: 'Poppins', sans-serif;
   padding: 2rem;
+  min-height: 100vh;
 }
 
 h1 {
   font-family: 'Orbitron', sans-serif;
   color: #ff2a8d;
   font-size: 2.8rem;
-  text-shadow: 
-    0 0 5px #ff2a8d,
-    0 0 10px #ff2a8d,
-    0 0 20px #ff007f,
-    0 0 40px #ff007f;
+  text-shadow: 0 0 10px rgba(255, 42, 141, 0.7);
 }
-
-p {
-  color: #ff66b2;
-  font-size: 1.1rem;
-  text-shadow: 0 0 8px rgba(255, 0, 127, 0.6);
-}
->>>>>>> dev

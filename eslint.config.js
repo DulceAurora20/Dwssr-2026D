@@ -1,16 +1,24 @@
-<<<<<<< HEAD
-import js from "@eslint/js";
+import { FlatCompat } from "@eslint/eslintrc";
 import globals from "globals";
-import { defineConfig } from "eslint/config";
+import { dirname } from "node:path";
+import { fileURLToPath } from "node:url";
 
-export default defineConfig([
+const compat = new FlatCompat({
+  baseDirectory: dirname(fileURLToPath(import.meta.url)),
+});
+
+export default [
+  {
+    ignores: ["**/dist/**", "**/node_modules/**"],
+  },
+  ...compat.extends("airbnb-base"),
   {
     files: ["**/*.{js,mjs,cjs}"],
-    plugins: { js },
-    extends: ["js/recommended"],
     languageOptions: {
+      ecmaVersion: "latest",
       sourceType: "module",
       globals: {
+        ...globals.browser,
         ...globals.node,
       },
     },
@@ -21,28 +29,9 @@ export default defineConfig([
           argsIgnorePattern: "^_",
         },
       ],
+      // Desactivamos esta regla para evitar conflictos con rutas de CSS y Vite
+      "import/no-unresolved": "off",
     },
   },
-]);
-=======
-export default [
-  {
-    files: ['**/*.js'],
-    languageOptions: {
-      ecmaVersion: 'latest',
-      sourceType: 'module',
-      globals: {
-        process: 'readonly',
-        console: 'readonly',
-        __dirname: 'readonly',
-        module: 'readonly',
-        require: 'readonly'
-      }
-    },
-    rules: {
-      'no-unused-vars': 'warn',
-      'no-console': 'off'
-    }
-  }
+  ...compat.extends("prettier"),
 ];
->>>>>>> 6465271e0b18cc4a1dbf098529ef506399cad466

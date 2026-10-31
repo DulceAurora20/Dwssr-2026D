@@ -4,51 +4,41 @@
   "private": true,
   "type": "module",
   "scripts": {
-<<<<<<< HEAD
-    "start": "node ./server/bin/www.js",
-    "lint:back": "eslint server/",
-=======
     "start": "NODE_ENV=production node ./server/bin/www.js",
->>>>>>> 6465271e0b18cc4a1dbf098529ef506399cad466
     "dev": "DEBUG=dwssr-2026d:* nodemon ./server/server/bin/www.js",
-    "dev:vite": "vite",
+    "dev:vite": "vite --host",
     "dev:all": "concurrently \"npm run dev\" \"npm run dev:vite\"",
     "build": "vite build",
     "preview": "npm run build && npm start",
     "greet": "echo \"Hola Mundo\"",
-    "lint:back": "eslint \"server/**/*.js\"",
-    "lint:front": "eslint \"src/**/*.js\"",
+    "lint:back": "ESLINT_USE_FLAT_CONFIG=true eslint \"server/**/*.js\"",
+    "lint:front": "ESLINT_USE_FLAT_CONFIG=true eslint \"src/**/*.js\"",
     "lint:all": "npm run lint:back && npm run lint:front",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "ESLINT_USE_FLAT_CONFIG=true eslint \"server/**/*.js\" \"src/**/*.js\" --fix",
+    "format": "prettier --write \"server/**/*.js\" \"src/**/*.js\"",
+    "format:check": "prettier --check \"server/**/*.js\" \"src/**/*.js\""
   },
   "dependencies": {
+    "@eslint/eslintrc": "^3.3.1",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "express": "~4.16.1",
+    "express-handlebars": "^8.0.1",
+    "globals": "^17.13.0",
     "hbs": "~4.0.4",
     "http-errors": "~1.6.3",
     "morgan": "~1.9.1"
   },
   "devDependencies": {
-<<<<<<< HEAD
     "concurrently": "^9.2.4",
-    "nodemon": "^3.1.14",
-    "vite": "^8.3.4"
-=======
-<<<<<<< HEAD
-    "@eslint/js": "^10.0.1",
-    "eslint": "^10.12.0",
-    "globals": "^17.13.0",
-    "nodemon": "^3.1.14",
-    "tailwindcss": "^4.3.3"
-=======
-    "concurrently": "^9.2.4",
-    "eslint": "^10.12.0",
+    "eslint": "^8.57.1",
+    "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-import": "^2.32.0",
     "nodemon": "^3.1.14",
+    "prettier": "^3.6.2",
+    "tailwindcss": "^4.3.3",
     "vite": "^8.3.4"
->>>>>>> 6465271e0b18cc4a1dbf098529ef506399cad466
->>>>>>> dev
   },
   "imports": {
     "#server/*": "./server/*",

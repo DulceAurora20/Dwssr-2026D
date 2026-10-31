@@ -1,7 +1,6 @@
+// Importando los estilos de la pagina
 import './styles/main.css';
-<<<<<<< HEAD
-console.log('VITE + EXPRESS Working!!');
-=======
 
-console.log('¡Estilos neón cargados correctamente!');
->>>>>>> dev
+// Imprimiendo en consola
+// eslint-disable-next-line no-console
+console.log('🎉 VITE ✨ + ✨ EXPRESS Working!!');

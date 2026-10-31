@@ -10,6 +10,8 @@
   "editor.insertSpaces": true,
   "editor.detectIndentation": false,
 
+  "eslint.useFlatConfig": true,
+
   // Configuración solicitada para el Autofix de VSCode (ESLint)
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "always"

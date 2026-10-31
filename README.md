@@ -28,3 +28,21 @@ Set esencial con los tipos de commit más habituales para proyectos frontend, ba
 | 🚀 | `deploy` | Scripts de CI/CD, configuración para despliegue en Vercel, Netlify, Docker. |
 | 🔥 | `remove` | Eliminación de código muerto, assets huérfanos o dependencias en desuso. |
 ---
+
+# 🟩 Convención de Iconos para Commits
+commit a1b2c3d'
+
+# 🧹 Airbnb Base y Prettier
+
+El proyecto aplica `eslint-config-airbnb-base` a JavaScript y usa `eslint-config-prettier`
+para desactivar las reglas de formato de ESLint que podrían entrar en conflicto con Prettier.
+La configuración plana de ESLint 8 carga Airbnb mediante `@eslint/eslintrc` (`FlatCompat`).
+
+Instala las dependencias del proyecto con `npm install`. Comandos disponibles:
+
+- `npm run lint:all`: analiza los archivos JavaScript del servidor y de `src/`.
+- `npm run lint:fix`: corrige automáticamente los problemas que ESLint pueda arreglar.
+- `npm run format`: aplica el formato de Prettier a los mismos archivos.
+- `npm run format:check`: comprueba el formato sin modificar archivos.
+
+La configuración del editor habilita ESLint Flat Config y la corrección automática al guardar.
