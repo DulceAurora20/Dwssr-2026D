@@ -1,26 +1,24 @@
-// Importamos bibliotecas de node
+// Importando el core de winston
+import winston, { format } from 'winston';
+// Importando bibliotecas de node
 import path from 'node:path';
 import fs from 'node:fs';
-
-import winston, { format } from 'winston';
 // Importando plug-in de winston
 import DailyRotateFile from 'winston-daily-rotate-file';
 
-// Destructuración utiles de format
-const {
-  combine, timestamp, label, printf, colorize, prettyPrint,
-} = format;
+// Desestructurar funciones utiles de format
+const { combine, timestamp, label, printf, colorize, prettyPrint } = format;
 
 // Creando variable del directorio raiz
-const rootDir = path.resolve(process.cwd());
+const rootdir = path.resolve(process.cwd());
 
 // Creando directorio de Logs
-const logsDir = path.join(rootDir, 'logs');
+const logsDir = path.join(rootdir, 'logs');
 if (!fs.existsSync(logsDir)) {
   fs.mkdirSync(logsDir, { recursive: true });
 }
 
-// Defininedo esquema de colores
+// Definiendo esquema de colores
 const colors = {
   error: 'red',
   warn: 'yellow',
@@ -29,28 +27,31 @@ const colors = {
   debug: 'blue',
 };
 
-// Agregando ese esquema a winston 
+// Agregando ese esquema a winston
 winston.addColors(colors);
 
 // Creando plantillas para los formatos
 
-// Formato de consola 
+// Formato de consola
 const myConsoleFormat = combine(
   // Colores del formato
   colorize({ all: true }),
   // Agregando una etiqueta
-  label({ label: '📢' }),
-  // Agregando fechas
+  label({ label: '📢: ' }),
+  // Agregando fecha
   timestamp({ format: 'DD-MM-YYYY HH:mm:ss' }),
-  // Funcion de impresion 
-  printf((info) => `${info.level} ⚤ ${info.label} ⚤ ${info.timestamp} ⚤ ${info.message}`),
+  // Función de impresion
+  printf(
+    (info) =>
+      `${info.level} ► ${info.label} ► ${info.timestamp} ► ${info.message}`,
+  ),
 );
 
 // Formato para los archivos JSON
 const myFileFormat = combine(
-  // Retirar colorizacion 
+  // Retirar colorizacion
   format.uncolorize(),
-  // Agregar Fecha ISO
+  // Agregar fecha ISO
   timestamp(),
   // Salida
   format.json(),
@@ -60,8 +61,8 @@ const myFileFormat = combine(
 const options = {
   errorFile: {
     level: 'error',
-    filename: path.join(rootDir, 'logs', 'error.log'),
-    maxsize: 5242880, //  5MB
+    filename: path.join(logsDir, 'error.log'),
+    maxsize: 5242880, // 5MB
     maxFiles: 2,
     format: myFileFormat,
   },
@@ -72,8 +73,8 @@ const options = {
   },
   readableFile: {
     level: 'info',
-    filename: path.join(rootDir, 'logs', 'readable.log'),
-    maxsize: 5242880, //  5MB
+    filename: path.join(logsDir, 'readable.log'),
+    maxsize: 5242880, // 5MB
     maxFiles: 2,
     format: combine(
       format.uncolorize(),
@@ -86,7 +87,7 @@ const options = {
     filename: path.join(logsDir, 'app-%DATE%.log'),
     datePattern: 'YYYY-MM-DD',
     zippedArchive: true,
-    maxSize: 5242880, //  5MB
+    maxsize: 5242880, // 5MB
     maxFiles: 2,
     format: myFileFormat,
   },
@@ -112,6 +113,6 @@ const logger = winston.createLogger({
   ],
   exitOnError: false,
 });
- 
+
 // Exportamos
 export default logger;

@@ -1,14 +1,15 @@
-body {
-  background-color: #000000 !important;
-  color: #ffffff;
-  font-family: 'Poppins', sans-serif;
-  padding: 2rem;
-  min-height: 100vh;
+@import "tailwindcss";
+/*
+Linea que informa a tailwind donde estan
+las vistas de nuestra app
+*/
+@source "../../server/views/**/*.hbs";
+
+p {
+  margin-top: 20px;
 }
 
-h1 {
-  font-family: 'Orbitron', sans-serif;
-  color: #ff2a8d;
-  font-size: 2.8rem;
-  text-shadow: 0 0 10px rgba(255, 42, 141, 0.7);
+body{
+    padding: 50px;
+    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }

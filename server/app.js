@@ -1,59 +1,96 @@
+// Funcion para manejar errores en la aplicacion
 import createError from 'http-errors';
+// Importar el framework express
 import express from 'express';
+// Importa modulos para manejar rutas
 import path, { dirname } from 'node:path';
+// Importa modulos para manejar cookies
 import cookieParser from 'cookie-parser';
-import logger from 'morgan';
+// Importa modulos para manejar logs
+import morgan from 'morgan';
+// Importando biblioteca de debug
+import createDebug from 'debug'; // 👈
+// Imports para crear Dirname
 import { fileURLToPath } from 'node:url';
-
 // Importando el template engine Handlebars
 import hbs from 'hbs';
 
-// Crear el objeto Debug
-import createDebug from 'debug';
+// Importar las rutas de la aplicacion
 
-// Importar Las rutas de la aplicación con la extensión .js para Node.js
-// eslint-disable-next-line import/extensions
-import indexRouter from './routes/index.js';
-// eslint-disable-next-line import/extensions
-import usersRouter from './routes/users.js';
+import indexRouter from '#routes/index.js';
+
+import usersRouter from '#routes/users.js';
 // Importando el registrador del helper
-// eslint-disable-next-line import/extensions
-import { registerViteHelper } from './helpers/hbs.helpers.js';
+import { registrarViteHelper } from './lib/vite.js';
+// Importando la configuracion de winston logger
 
-// eslint-disable-next-line no-underscore-dangle
+import logger from './lib/winston.js';
+
+// Creacion del objeto Debug
+const debug = createDebug('dwssr-2026b:server'); // 👈
+// Creando la variables de rutas
 const __filename = fileURLToPath(import.meta.url);
-// eslint-disable-next-line no-underscore-dangle
 const __dirname = dirname(__filename);
 
-const debug = createDebug('dwssr-2026d:app');
-debug('Iniciando aplicación de Express...'); // Usamos debug para que no marque no-unused-vars
-
+// Crear la aplicacion express
+debug('🔨 Creando backend');
 const app = express();
 
-// view engine setup
+// Configurar el motor de vistas con hbs
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
+// Registro Helper (CORREGIDO)
+registrarViteHelper(hbs);
 
-// Registrar los helpers de Vite para Handlebars
-registerViteHelper(hbs);
+// ==========================================
+// INTEGRACIÓN VITE COMO MIDDLEWARE
+// (Sin esto, los estilos CSS jamás cargarán)
+// ==========================================
+if (process.env.NODE_ENV !== 'production') {
+  // eslint-disable-next-line import-x/no-extraneous-dependencies
+  const { createServer } = await import('vite');
+  const viteDevServer = await createServer({
+    server: { middlewareMode: true },
+    appType: 'custom',
+  });
+  app.use(viteDevServer.middlewares);
+}
+// ==========================================
 
-app.use(logger('dev'));
+// Configurar middlewares de la aplicacion
+app.use(
+  morgan('dev', {
+    stream: {
+      write: (msg) => logger.info(msg.trim())
+    }
+  }),
+);
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, '../public')));
 
+// Archivos estaticos para produccion
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '..', 'dist')));
+}
+
+// Configurar la carpeta de archivos estaticos
+debug('🔨 Creando servidor de Archivos Estáticos');
+app.use(express.static(path.join(__dirname, '..', 'public')));
+
+// Registramos las rutas de la aplicacion
+debug('🛣️ Registrando rutas');
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
-// catch 404 and forward to error handler
+// Capturamos errores 404 y los enviamos al manejador de errores
 app.use((req, res, next) => {
   next(createError(404));
 });
 
-// error handler - se agrega 'next' para cumplir con la firma de middleware de Express
-// error handler
-app.use((err, req, res) => {
+// Manejador de errores
+app.use((err, req, res, _next) => {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
@@ -62,5 +99,14 @@ app.use((err, req, res) => {
   res.status(err.status || 500);
   res.render('error');
 });
+
+// Ejemplo de codigo inalcanzable
+// (()=>{
+//   let age = 10
+//   return age
+//   if (age == 10) {
+//     console.log("Codigo")
+//   }
+// })()
 
 export default app;

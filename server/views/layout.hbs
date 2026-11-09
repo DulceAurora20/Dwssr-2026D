@@ -1,33 +1,13 @@
 <!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dulce Aurora</title>
-    <link rel="stylesheet" href="/assets/main.css">
-    <style>
-      /* Estilos Neón: Fondo Negro y Letras Brillantes */
-      body {
-        background-color: #000000;
-        color: #f3f4f6;
-        font-family: system-ui, -apple-system, sans-serif;
-        padding: 3rem;
-        margin: 0;
-        min-height: 100vh;
-      }
-      h1, h2, h3 {
-        font-family: 'Trebuchet MS', 'Arial Black', sans-serif;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        text-shadow: 0 0 10px #ff007f, 0 0 20px #ff007f, 0 0 30px #ff007f;
-      }
-      p, span, div {
-        font-size: 1.2rem;
-      }
-    </style>
-</head>
-<body>
+<html>
+  <head>
+    <title>{{title}}</title>
+    <!-- Carga de script y estilos -->
+    {{!-- Cargando los scripts con el Helper  --}}
+    {{{ viteAssets }}}
+    
+  </head>
+  <body>
     {{{body}}}
-    <script type="module" src="/javascripts/main.js"></script>
-</body>
+    </body>
 </html>
