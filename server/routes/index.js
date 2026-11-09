@@ -1,20 +1,21 @@
-import express from 'express';
+import { Router } from 'express';
 
-const router = express.Router();
+const router = Router();
 
-//Variable de estado de memoria
+// Variable de estado de memoria
 let counter = 0;
 const numbers = [];
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  counter++;
+router.get('/', (_req, res) => {
+  counter += 1;
   numbers.push(counter);
 
-  res.render('index', { title: 'Dulce Aurora',
+  res.render('index', {
+    title: 'Dulce Aurora',
     counter,
-    numbers
-   });
+    numbers,
+  });
 });
 
 export default router;

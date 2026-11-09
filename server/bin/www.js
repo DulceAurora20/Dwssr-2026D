@@ -1,81 +1,67 @@
 #!/usr/bin/env node
+/* eslint-disable no-console */
 
 /**
  * Module dependencies.
  */
 
+import debug from 'debug';
+import http from 'node:http';
+// eslint-disable-next-line import/extensions
 import app from '../app.js';
-// Importando Debug
-import createDebug from "debug"
-// var debug = require('debug')('dwssr-2026d:server');
 
-import http from 'node:http'
-
-// Creación del objeto Debug
-const debug = createDebug ('dwssr-2026d:server')
-
-/**
- * Get port from environment and store in Express.
- */
-
-const port = normalizePort(3000 || process.env.PORT || '3000');
-app.set('port', port);
-
-/**
- * Create HTTP server.
- */
-
-const server = http.createServer(app);
-
-/**
- * Listen on provided port, on all network interfaces.
- */
-
-server.listen(port);
-server.on('error', onError);
-server.on('listening', onListening);
+const log = debug('dwssr-2026d:server');
 
 /**
  * Normalize a port into a number, string, or false.
  */
-
 function normalizePort(val) {
-  const port = parseInt(val, 10);
+  const portNum = parseInt(val, 10);
 
-  if (isNaN(port)) {
+  if (Number.isNaN(portNum)) {
     // named pipe
     return val;
   }
 
-  if (port >= 0) {
+  if (portNum >= 0) {
     // port number
-    return port;
+    return portNum;
   }
 
   return false;
 }
 
 /**
+ * Get port from environment and store in Express.
+ */
+const port = normalizePort(process.env.PORT || '3000');
+app.set('port', port);
+
+/**
+ * Create HTTP server.
+ */
+const server = http.createServer(app);
+
+/**
  * Event listener for HTTP server "error" event.
  */
-
 function onError(error) {
   if (error.syscall !== 'listen') {
     throw error;
   }
 
   const bind = typeof port === 'string'
-    ? `Pipe $ {port}` //'Pipe' + port
-    : `Port $ {port}` //
+    ? `Pipe ${port}`
+    : `Port ${port}`;
 
   // handle specific listen errors with friendly messages
   switch (error.code) {
     case 'EACCES':
-      console.error(`$ {bind} requieres elevated `);
+      console.error(`${bind} requires elevated privileges`);
       process.exit(1);
       break;
     case 'EADDRINUSE':
-      console.error(bind + ' is already in use');
+      console.error(`${bind} is already in use`);
       process.exit(1);
       break;
     default:
@@ -86,11 +72,17 @@ function onError(error) {
 /**
  * Event listener for HTTP server "listening" event.
  */
-
 function onListening() {
   const addr = server.address();
   const bind = typeof addr === 'string'
     ? `pipe ${addr}`
     : `port ${addr.port}`;
-  debug('Listening on ' + bind);
+  log(`Listening on ${bind}`);
 }
+
+/**
+ * Listen on provided port, on all network interfaces.
+ */
+server.listen(port, '0.0.0.0');
+server.on('error', onError);
+server.on('listening', onListening);
