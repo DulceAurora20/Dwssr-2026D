@@ -1,8 +1,8 @@
 // Biblioteca File Stream
 import fs from 'node:fs';
 // Biblioteca de rutas
-import { fileURLToPath } from 'node:url';
 import path, { dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
 // Importando Debug
 import createDebug from 'debug';
 
@@ -12,7 +12,6 @@ const debug = createDebug('dwssr-2026b:server');
 // Creando la variables de rutas
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-
 /**
  * Helper para Handlebars que genera las etiquetas de Vite
  * EN DESARROLLO: Conecta al servidor de desarrollo de Vite
@@ -21,15 +20,18 @@ const __dirname = dirname(__filename);
 export function viteAssets() {
   // Obtener modo de ejecución
   const isDev = process.env.NODE_ENV !== 'production';
+  // Rescatando la URL del servidor de desarrollo
+  const viteDevServer = process.env.VITE_DEV_SERVER || 'http://localhost:5173';
 
   // Si estamos en modo desarrollo
   if (isDev) {
-    // Usamos rutas relativas; Express servirá estos recursos
-    // mediante el middleware de Vite
+    // En desarrollo, cargamos los archivos
+    // del front-end directamente del servidor
+    // de Desarorllo de Vite
     return `
-        <script type="module" src="/@vite/client"></script>
-        <script type="module" src="/main.js"></script>
-    `;
+        <script type="module" src="${viteDevServer}/@vite/client"></script>
+        <script type="module" src="${viteDevServer}/main.js"></script>
+        `;
   }
   // En produccion leemos el manifest
   // y generamos las estiquetas finales de produccion
@@ -51,11 +53,8 @@ export function viteAssets() {
   // de manifiesto que genera vite en la compilacion
   // de los archivos del front-end
   const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf-8'));
-
   // Obteniendo la ruta del punto de entrada del front-end
-  // Soportamos tanto 'main.js' como 'src/main.js' dependiendo de tu vite.config
-  const mainEntry = manifest['main.js'] || manifest['src/main.js'];
-
+  const mainEntry = manifest['main.js'];
   // Guarda el main.js
   if (!mainEntry) {
     debug('Archivo main.js no esta disponible en el manifiesto de Vite');
@@ -80,7 +79,7 @@ export function viteAssets() {
 /*
  * Funcion registradora del Helper de Handlebars
  */
-export function registrarViteHelper(hbs) {
+export function registerViteHelper(hbs) {
   hbs.registerHelper(
     'viteAssets',
     () =>
