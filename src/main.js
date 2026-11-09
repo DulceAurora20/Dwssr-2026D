@@ -1,3 +1,5 @@
+// IMPORTANDO LOS ESTILOS DE LA PAGINA
 import './styles/main.css';
 
-console.log('¡Estilos neón cargados correctamente!');
+// imprimiendo en consola
+console.warn("🎉 vite, ⚡ express, 📢 🇺🇸Working");
